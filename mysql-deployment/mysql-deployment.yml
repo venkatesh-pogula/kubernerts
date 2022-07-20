@@ -35,7 +35,7 @@ metadata:
 spec:
   containers:
     - name: mysql-container
-      image: ""
+      image: 419784164229.dkr.ecr.us-west-2.amazonaws.com/mysql:latest
       volumeMounts:
             - mountPath: "/var/lib/mysql"
               persistentVolumeClaim:
