@@ -5,11 +5,11 @@ metadata:
   name: mysql-gp2
   annotations:
     storageclass.kubernetes.io/is-default-class: "true"
-  provisioner: kubernetes.io/aws-ebs
-  parameters:
-    type: gp2
-    fsType: ext4
-    zone: us-west-2a, us-west-2b, us-west-2c
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: gp2
+  fsType: ext4
+  zone: us-west-2a, us-west-2b, us-west-2c
  
 ---
 apiVersion: v1
@@ -25,6 +25,22 @@ spec:
   resources:
     requests:
       storage: 1Gi      
+## services created for mysql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+spec:
+  type: NodePort
+  selector:
+    app: web
+  ports:
+    - containerPort: 3306 
+      targetPort: 3306
+      nodePort: 30002
+
+## deployment for mysql container
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -39,7 +55,7 @@ spec:
       volumeMounts:
             - mountPath: "/var/lib/mysql"
               persistentVolumeClaim:
-              claimName: mysql-pvc
+                 claimName: mysql-pvc
       env:
           - name: MYSQL_DATABASE
             value: 'testing'
@@ -51,3 +67,6 @@ spec:
             value: 'password'        
       ports:
         - containerPort: 3306  
+  imagePullSecrets:
+      - name: awssecerets
+          
