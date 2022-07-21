@@ -53,20 +53,21 @@ spec:
     - name: mysql-container
       image: 419784164229.dkr.ecr.us-west-2.amazonaws.com/mysql:latest
       volumeMounts:
-            - mountPath: "/var/lib/mysql"
-              persistentVolumeClaim:
-                 claimName: mysql-pvc
+        - mountPath: "/var/lib/mysql"
+          persistentVolumeClaim:
+            claimName: mysql-pvc
       env:
-          - name: MYSQL_DATABASE
-            value: 'testing'
-          - name: MYSQL_USER
-            value: 'myfrstsql'
-          - name: MYSQL_PASSWORD
-            value: '1234'
-          - name: MYSQL_ROOT_PASSWORD
-            value: 'password'        
+        -
+        - name: MYSQL_DATABASE
+          value: 'testing'
+        - name: MYSQL_USER
+          value: 'myfrstsql'
+        - name: MYSQL_PASSWORD
+          value: '1234'
+        - name: MYSQL_ROOT_PASSWORD
+          value: 'password'        
       ports:
         - containerPort: 3306  
   imagePullSecrets:
-      - name: awssecerets
+    - name: awssecerets
           
