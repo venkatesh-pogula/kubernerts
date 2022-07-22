@@ -13,7 +13,7 @@ spec:
   template:
     metadata:
       labels:
-        app: openmrs  
+        app: openmrs
    spec:      
      containers:
        - name: open-mrs-container
