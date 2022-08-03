@@ -1,0 +1,41 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-app-js
+spec:
+  selector:
+    app.kubernetes.io/name: My-app-js
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 30001
+  type: LoadBalancer
+status:
+  loadBalancer:
+    ingress:
+    - ip: 192.0.2.127
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-js
+  labels:
+    app: appjs
+spec:
+  selector:
+    matchLabels:
+      app: appjs
+  replicas: 3    
+  template:
+    metadata:
+      labels:
+        app: appjs
+   spec:      
+     containers:
+       - name: app-js-container
+         image: pvenkateswarrao/app.js:latest
+         ports:
+           - containerPorts: 3000
+      imagePullSecrets:
+        - name: dockersecerts
