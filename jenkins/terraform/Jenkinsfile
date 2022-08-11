@@ -1,0 +1,27 @@
+pipeline{
+    agent{ label 'any'}
+    properties([parameters([booleanParam(defaultValue: true, description: 'This parameter is used for apply or destroy', name: 'Terraform_build')])])
+
+    stages{
+        stage ('scm'){
+            steps{
+                git ""
+            }
+        }
+        stage ('terraform init'){
+            steps{
+            sh 'terraform init'
+         }
+     }
+    stage('terraform plan'){
+        steps{
+            sh 'terraform plan'
+         }
+     }
+    stage ('terraform apply'){
+        steps{
+            sh 'terraform apply'
+         }
+    }
+  }
+}
